@@ -15,4 +15,8 @@ public interface CustomerService {
 
     public void deleteCustomer(int theId);
 
+    List<Customer> getCustomersById(int id);
+
+    int getTotalNumber();
+
 }

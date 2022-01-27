@@ -13,4 +13,10 @@ public interface CustomerDAO {
     public Customer getCustomer(int theId);
 
     public void deleteCustomer(int theId);
+
+	void merge(int theId);
+
+	List<Customer> getCustomersById(int id);
+
+	int getTotalNumber();
 }

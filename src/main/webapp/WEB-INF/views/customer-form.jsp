@@ -50,14 +50,49 @@
         <form:input path="email" cssClass="form-control" />
        </div>
       </div>
-
+      
+      <div class="form-group">
+       <label for="version" class="col-md-3 control-label">Version</label>
+       <div class="col-md-9">
+        <form:input path="version" cssClass="form-control" />
+       </div>
+      </div>
+      
+      <div class="form-group">
+       <label for="dataOFbirth" class="col-md-3 control-label">DataOFbirth</label>
+       <div class="col-md-9">
+        <form:input path="dataOFbirth" cssClass="form-control" />
+       </div>
+      </div>
+      
+      <div class="form-group">
+       <label for="lastUpdated" class="col-md-3 control-label">LastUpdated</label>
+       <div class="col-md-9">
+        <form:input path="lastUpdated" cssClass="form-control" />
+       </div>
+      </div>
+      
+      <div class="form-group">
+       <label for="lastUpdatedBy" class="col-md-3 control-label">LastUpdatedBy</label>
+       <div class="col-md-9">
+        <form:input path="lastUpdatedBy" cssClass="form-control" />
+       </div>
+      </div>
+      
+      <div class="form-group">
+       <label for="is_active" class="col-md-3 control-label">Active</label>
+       <div class="col-md-9">
+        <form:input path="is_active" cssClass="form-control" />
+       </div>
+      </div>
+      
       <div class="form-group">
        <!-- Button -->
        <div class="col-md-offset-3 col-md-9">
         <form:button cssClass="btn btn-primary">Submit</form:button>
        </div>
       </div>
-
+       
      </form:form>
     </div>
    </div>

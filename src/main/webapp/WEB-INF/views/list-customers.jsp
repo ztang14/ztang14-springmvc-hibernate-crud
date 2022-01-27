@@ -31,6 +31,11 @@
           <th>First Name</th>
           <th>Last Name</th>
           <th>Email</th>
+          <th>Version</th>
+          <th>DataOFbirth</th>
+          <th>LastUpdated</th>
+          <th>LastUpdatedBy</th>
+          <th>Active</th>
           <th>Action</th>
       </tr>
       <!-- loop over and print our customers -->
