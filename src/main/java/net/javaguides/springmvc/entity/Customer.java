@@ -36,13 +36,13 @@ public class Customer {
     @Column(name = "version", length = 1)
     private int version = 0;
     
-    @Column(name = "dataOFbirth")
+    @Column(name = "data_of_birth")
     private int dataOFbirth;
     
-    @Column(name = "lastUpdated")
+    @Column(name = "last_updated")
     LocalDateTime lastUpdated;
     
-    @Column(name = "lastUpdatedBy")
+    @Column(name = "last_updated_by")
     private String lastUpdatedBy;
     
     @Column(name = "is_active")

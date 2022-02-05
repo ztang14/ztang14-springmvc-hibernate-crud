@@ -1,4 +1,4 @@
-package org.o7planning.springmvcfileud.controller;
+package net.javaguides.springmvc.controller;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.o7planning.springmvcfileud.form.MyUploadForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -18,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
+
+import net.javaguides.springmvc.form.MyUploadForm;
 
 @Controller
 public class MyFileUploadController {

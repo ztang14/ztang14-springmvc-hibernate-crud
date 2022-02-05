@@ -1,20 +1,17 @@
 package net.javaguides.springmvc.controller;
 
-import java.io.*;
-import java.util.List;
-import java.util.concurrent.locks.ReentrantLock;
-
+import net.javaguides.springmvc.entity.Customer;
+import net.javaguides.springmvc.service.CustomerService;
+import net.javaguides.springmvc.thread.SaveToFileThread;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import net.javaguides.springmvc.entity.Customer;
-import net.javaguides.springmvc.service.CustomerService;
+import java.io.File;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Controller
 @RequestMapping("/customer")
@@ -22,34 +19,9 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-    private static int id =1;
-    private ReentrantLock lock = new ReentrantLock(true);
-
-    public void outputFile(int total){
-        lock.lock();
-        if (id<total) {
-            try {
-                FileWriter fw = new FileWriter("../file.txt", true);
-                BufferedWriter bw = new BufferedWriter(fw);
-                List<Customer> customerList = customerService.getCustomersById(id);
-                for (int i = 0; i < customerList.size(); i++) {
-                    String message = customerList.get(i).toString();
-                    bw.write(message);
-                    bw.flush();
-                }
-                id += 20;
-                bw.close();
-                fw.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        lock.unlock();
-    }
-
     @GetMapping("/list")
     public String listCustomers(Model theModel) {
-        List < Customer > theCustomers = customerService.getCustomers();
+        List<Customer> theCustomers = customerService.getCustomers();
         theModel.addAttribute("customers", theCustomers);
         return "list-customers";
     }
@@ -69,7 +41,7 @@ public class CustomerController {
 
     @GetMapping("/updateForm")
     public String showFormForUpdate(@RequestParam("customerId") int theId,
-        Model theModel) {
+                                    Model theModel) {
         Customer theCustomer = customerService.getCustomer(theId);
         theModel.addAttribute("customer", theCustomer);
         return "customer-form";
@@ -82,51 +54,21 @@ public class CustomerController {
     }
 
     @GetMapping("/savetoFile")
-    public void savetoFile(){
-        int total = customerService.getTotalNumber();
-
-        Thread a = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                outputFile(total);
-            }
-        });
-        Thread b = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                outputFile(total);
-            }
-        });
-
-        Thread c = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                outputFile(total);
-            }
-        });
-
-        Thread d = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                outputFile(total);
-            }
-        });
-
-        Thread e = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                outputFile(total);
-            }
-        });
-
-        while(id<total) {
-            a.run();
-            b.run();
-            c.run();
-            d.run();
-            e.run();
+    @ResponseBody
+    public String savetoFile() {
+        int threadSize = 5;
+        ExecutorService executor = Executors.newFixedThreadPool(threadSize);
+        File file = new File("customers.txt");
+        if (file.exists()) {
+            file.delete();
         }
+        for (int i = 0; i < threadSize; i++) {
+            int startId = i * 100 + 1;
+            SaveToFileThread thread = new SaveToFileThread(file, startId, customerService);
+            executor.submit(thread);
+        }
+        executor.shutdown();
+        return "save to file success, file is " + file.getAbsolutePath();
     }
 
-    }
 }

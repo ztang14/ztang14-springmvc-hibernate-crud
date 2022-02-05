@@ -1,4 +1,4 @@
-package org.o7planning.springmvcfileud.form;
+package net.javaguides.springmvc.form;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
